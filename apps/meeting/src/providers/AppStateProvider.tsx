@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useContext, useState, ReactNode } from 'react';
-import { MeetingMode } from '../types';
+import { MeetingMode, VideoGridMode } from '../types';
 
 type Props = {
   children: ReactNode;
@@ -14,9 +14,11 @@ interface AppStateValue {
   theme: string;
   region: string;
   meetingMode: MeetingMode;
+  videoGridMode: VideoGridMode;
   toggleTheme: () => void;
   setAppMeetingInfo: (meetingId: string, name: string, region: string) => void;
   setMeetingMode: (meetingMode: MeetingMode) => void;
+  setVideoGridMode: (videoGridMode: VideoGridMode) => void;
 }
 
 const AppStateContext = React.createContext<AppStateValue | null>(null);
@@ -37,6 +39,7 @@ export function AppStateProvider({ children }: Props) {
   const [meetingId, setMeeting] = useState(query.get('meetingId') || '');
   const [region, setRegion] = useState(query.get('region') || '');
   const [meetingMode, setMeetingMode] = useState(MeetingMode.Attendee);
+  const [videoGridMode, setVideoGridMode] = useState(VideoGridMode.GalleryView);
   const [localUserName, setLocalName] = useState('');
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -69,9 +72,11 @@ export function AppStateProvider({ children }: Props) {
     theme,
     region,
     meetingMode,
+    videoGridMode,
     toggleTheme,
     setAppMeetingInfo,
     setMeetingMode,
+    setVideoGridMode,
   };
 
   return (
